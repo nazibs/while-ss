@@ -464,7 +464,6 @@ class Parser{
 			
 			WhileSS.print("computeStatements :: token: " + token.type + " :: token.val: " + token.value);
 			
-			
 			node = new ASTNode(node, token, computeAndOr());
 		}
 		return node;
@@ -596,9 +595,6 @@ class Interpreter{
 			
 			interpretSS(node.left, currentVariables, stepList, currentAST);
 			
-//			String rightAST = getRemainingAST(node.right, currentVariables);
-//			WhileSS.print("--END-Before-rightAST: "+rightAST);
-			
 			if(currentAST.toString().contains("while")) {
 				String ss = currentAST.substring(0, 12);
 				WhileSS.print("--END--> ss while check: " + ss);
@@ -610,8 +606,6 @@ class Interpreter{
 //					stepList.add("⇒ " + ast + "; " + currentAST + stateValues);
 				}
 			}
-			
-			
 			
 			String tempAST = getRemainingAST(node.left, currentVariables);
 //			StringBuilder tempCurrentAST = new StringBuilder(currentAST);
@@ -635,11 +629,6 @@ class Interpreter{
 			WhileSS.print("--END-> Will Print the following statement: " + "⇒ " + currentAST.toString().trim().replace(" ;", ";") + stateValues);
 			stepList.add("⇒ " + currentAST.toString().trim().replace(" ;", ";") + stateValues);
 			
-			
-//			String ast = (tempCurrentAST.length() == 0) ? "skip, " : "skip; " + tempCurrentAST.toString();
-//			String stateValues = (getResultString(currentVariables).equals("") ? ", {}" : ", " + getResultString(currentVariables));
-//			WhileSS.print("--END--> Will Print the following statement: " + "⇒ " + ast + stateValues);
-			
 			interpretSS(node.right, currentVariables, stepList, currentAST);
 			return getResultString(currentVariables);
 		}
@@ -662,7 +651,6 @@ class Interpreter{
 				
 			WhileSS.print("--tempAST: "+tempAST);
 			WhileSS.print("--currentAST: "+currentAST);
-			
 			WhileSS.print("--tempCurrentAST: " + tempCurrentAST.toString());
 			
 			if(tempCurrentAST.length() >0 && tempCurrentAST.charAt(0) == ';')
@@ -677,7 +665,6 @@ class Interpreter{
 			
 			WhileSS.print("--Assign--> Will Print the following statement: " + "⇒ " + ast + stateValues);
 			stepList.add("⇒ " + ast + stateValues);
-			
 			currentAST.replace(0, tempAST.length()+2, "");
 			
 			return getResultString(currentVariables);
@@ -766,7 +753,6 @@ class Interpreter{
 				
 				if(conditionCalculation == WhileSS.TRUE)
 					WhileSS.print("conditionCalculation == WhileSS.TRUE");
-				
 				if(conditionCalculation == WhileSS.FALSE)
 					WhileSS.print("conditionCalculation == WhileSS.FALSE");
 				
@@ -775,9 +761,6 @@ class Interpreter{
 				
 				if(conditionCalculation == WhileSS.TRUE) {
 					WhileSS.print("Reinterpreting True Statement");
-					
-//					WhileSS.print("--WHILE--node.trueStatement, ast: " + getRemainingAST(node.trueStatement, currentVariables));
-//					WhileSS.print("--WHILE--node, ast: " + getRemainingAST(node, currentVariables));
 					
 					ast = getRemainingAST(node.trueStatement, currentVariables) + "; " + getRemainingAST(node, currentVariables);
 					ast = ast.replace(") ;", ");");
@@ -791,33 +774,12 @@ class Interpreter{
 					
 					interpretSS(node.trueStatement, currentVariables, stepList, currentAST);
 					
-
-//					ast = "skip; " + getRemainingAST(node, currentVariables);
-//					stateValues = (getResultString(currentVariables).equals("") ? ", {}" : ", "+getResultString(currentVariables));
-//					WhileSS.print("--> Will Print the following statement: " + "⇒ " + ast + stateValues);
-//					stepList.add("⇒ " + ast + stateValues);
-					
 					ast = getRemainingAST(node, currentVariables);
 					stateValues = (getResultString(currentVariables).equals("") ? ", {}" : ", "+getResultString(currentVariables));
 					WhileSS.print("--> Will Print the following statement: " + "⇒ " + ast + stateValues);
 					stepList.add("⇒ " + ast + stateValues);
-					
 				}
 			}
-			
-			
-			
-//			ast = "skip";
-//			
-////			String astfalseStatement = getRemainingAST(node.falseStatement, currentVariables);
-//			
-//			
-////			WhileSS.print("--WHILE--FALSE-COND--falseStatement: " + node.falseStatement.token.value + " :: ast: " + astfalseStatement);
-//			
-//			stateValues = (getResultString(currentVariables).equals("") ? ", {}" : ", " + getResultString(currentVariables));
-//			WhileSS.print("--> Will Print the following statement: " + "⇒ " + ast + stateValues);
-//			stepList.add("⇒ " + ast + stateValues);
-			
 			
 			if(count == 0 || conditionCalculation == WhileSS.FALSE) {
 				WhileSS.print("While loop Counter 0 i.e. false condition in While");
@@ -858,21 +820,12 @@ class Interpreter{
 		}
 		else if(node.token.type == WhileSS.IF) {
 			
-			
-			
 			if(interpretSS(node.condition, currentVariables, stepList, currentAST) == WhileSS.TRUE) {
-				
-//				String tempAST = getRemainingAST(node, currentVariables);
-//				StringBuilder tempCurrentAST = new StringBuilder(currentAST);
-//				tempCurrentAST.replace(0, tempAST.length()+3, "");
-				
-				
 				
 				String ast = getRemainingAST(node.trueStatement, currentVariables);
 				String stateValues = (getResultString(currentVariables).equals("") ? ", {}" : ", " + getResultString(currentVariables));
 				
 				WhileSS.print("--TRUE--> AST to print: " + ast + "; " + currentAST);
-				
 				
 				String ss = currentAST.substring(0, 6);
 				WhileSS.print("--IF TRUE--> ss while check: " + ss);
@@ -885,21 +838,11 @@ class Interpreter{
 					stepList.add("⇒ " + ast + stateValues);
 					currentAST = new StringBuilder(ast);
 				}
-				
-				
-				
+			
 				WhileSS.print("---IF--currentAST: " + currentAST);
 				WhileSS.print("---IF--ast: " + ast);
 //				currentAST = new StringBuilder(ast);
 				WhileSS.print("---IF--After--currentAST: " + currentAST);
-				
-//				currentAST = new StringBuilder(ast);
-				
-//				String ss = currentAST.substring(0, 6);
-//				WhileSS.print("--IF TRUE--> ss while check: " + ss);
-//				if(!(ss.contains("while"))) {
-//					
-//				}
 				
 				return interpretSS(node.trueStatement, currentVariables, stepList, currentAST);
 			}
@@ -925,21 +868,13 @@ class Interpreter{
 					currentAST = new StringBuilder(ast);
 				}
 				
-				
-				
 				WhileSS.print("--FALSE--> Will Print the following statement: " + "⇒ " + ast + stateValues);
 //				stepList.add("⇒ " + ast + stateValues);
 //				stepList.add("⇒ " + ast + "; " + currentAST + stateValues);
 				
-//				String ss = currentAST.substring(0, 6);
-//				WhileSS.print("--IF TRUE--> ss while check: " + ss);
-//				if(!(ss.contains("while"))) {
-//					
-//				}
 				return interpretSS(node.falseStatement, currentVariables, stepList, currentAST);
 			}
 		}
-		
 		
 		return "";
 	}
@@ -979,12 +914,7 @@ public class WhileSS{
     		if(text.substring(0, 2).contains("{ "))
     			text = text.replace("{ ", "").replace(" }", "");
     		
-//    		text = text.replace("{ ", "").replace(" }", "");
-    		
-    		
     		if(text.equals("skip")) {
-//    			WhileSS.print("");
-//    			continue;
     			System.out.println("");
     		}
     		
@@ -1013,7 +943,6 @@ public class WhileSS{
 //				WhileSS.print("Original input text: " + text);
 //				WhileSS.print("Testing the getRemainingAST: " + interpreter.getRemainingAST(ast, new HashMap<String, String>()));
 //				
-				
 				ArrayList<String> steps = interpreter.calculate();
 				
 				WhileSS.print("Total No. of Steps = " + steps.size());
@@ -1022,10 +951,6 @@ public class WhileSS{
 					if(stepCount++ < 10000)
 						System.out.println(step);
 				}
-				
-				
-//			easy-6:	Complete - END remaining, 16-parenthesis
-				
     		}
 //    	}
 		sc.close();
